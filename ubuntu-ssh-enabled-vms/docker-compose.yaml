@@ -1,0 +1,34 @@
+services:
+  ubuntu1:
+    image: ubuntu:22.04
+    hostname: master
+    container_name: ubuntu1
+    command: sh -c "apt-get update && apt-get install -y openssh-server && mkdir /var/run/sshd && echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config && echo 'root:toor' | chpasswd && service ssh start && tail -f /dev/null"
+    ports:
+      - "2222:22"
+    volumes:
+      - ssh_host_keys:/etc/ssh
+
+  ubuntu2:
+    image: ubuntu:22.04
+    hostname: worker1
+    container_name: ubuntu2
+    command: sh -c "apt-get update && apt-get install -y openssh-server && mkdir /var/run/sshd && echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config && echo 'root:toor' | chpasswd && service ssh start && tail -f /dev/null"
+    ports:
+      - "2223:22"
+    volumes:
+      - ssh_host_keys:/etc/ssh
+
+  ubuntu3:
+    image: ubuntu:22.04
+    hostname: worker2
+    container_name: ubuntu3
+    command: sh -c "apt-get update && apt-get install -y openssh-server && mkdir /var/run/sshd && echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config && echo 'root:toor' | chpasswd && service ssh start && tail -f /dev/null"
+    ports:
+      - "2224:22"
+    volumes:
+      - ssh_host_keys:/etc/ssh
+
+volumes:
+  ssh_host_keys:
+
